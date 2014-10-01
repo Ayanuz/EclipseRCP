@@ -7,6 +7,13 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSource;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -63,7 +70,7 @@ public class RentalPropertyView extends ViewPart implements ISelectionListener {
 		gd.horizontalSpan = 2;
 		gd.horizontalAlignment = SWT.FILL;
 		rentedObjLabel.setLayoutData(gd);
-		
+		this.setLblAsDragSrc(this.rentedObjLabel);
 		Label lblStatCustomer = new Label(infoGroup, SWT.NONE);
 		lblStatCustomer.setText("Lou\u00E9 \u00E0");
 		
@@ -110,6 +117,19 @@ public class RentalPropertyView extends ViewPart implements ISelectionListener {
 		}
 			
 	}
-
+	
+	public void setLblAsDragSrc(final Label lbl) {
+		DragSource dg_src = new DragSource(lbl,  DND.DROP_MOVE | DND.DROP_COPY);
+		dg_src.setTransfer(new Transfer[] { TextTransfer.getInstance()});
+		dg_src.addDragListener(new DragSourceAdapter(){
+			@Override
+			public void dragSetData(DragSourceEvent event) {
+				// TODO Auto-generated method stub
+				if(TextTransfer.getInstance().isSupportedType(event.dataType))
+					event.data = lbl.getText();
+			}
+		});
+			
+	}
 
 }
