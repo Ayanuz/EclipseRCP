@@ -8,26 +8,46 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.internal.theme.RangeDrawData;
 import org.eclipse.swt.widgets.Display;
 
 import com.opcoach.training.rental.Customer;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
 import com.sogeti.rental.ui.RentalUICstes;
+import com.sogeti.rental.ui.RentalUiActivator;
 
 public class RentalProvider extends LabelProvider implements
 		ITreeContentProvider, RentalUICstes, IColorProvider  {
 
 	@Override
 	public Color getForeground(Object element) {
-		// TODO Auto-generated method stub
+	
+		if (element instanceof Customer)
+	
+		return Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
+	
+		else if (element instanceof RentalObject)
+	
+		return Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
+	
+		else if (element instanceof RentalAgency)
+	
+		return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+	
+		else if (element instanceof Node)
+	
+		return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
+	
 		return null;
-	}
+	
+		}
 
 	@Override
 	public Color getBackground(Object element) {
 		// TODO Auto-generated method stub
-		return Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
+		return Display.getDefault().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
 	
 	class Node {
@@ -123,6 +143,23 @@ public class RentalProvider extends LabelProvider implements
 		
 		return super.getText(element);
 	}
+	
+	@Override
+	public Image getImage(Object element) {
+		// TODO Auto-generated method stub
+		if (element instanceof RentalAgency)
+			return RentalUiActivator.getDefault().getImageRegistry().get(AGENCY_IMG);
+			
+		else if (element instanceof Node)
+			if (((Node)element).toString().equals(LOCATIONS_NODE))
+				return RentalUiActivator.getDefault().getImageRegistry().get(LOCATIONS_NODE);
+			else if (((Node)element).toString().equals(CUSTOMER_NODE))
+				return RentalUiActivator.getDefault().getImageRegistry().get(CUSTOMER_NODE);
+			else if (((Node)element).toString().equals(RENTAL_OBJ_NODE))
+				return RentalUiActivator.getDefault().getImageRegistry().get(RENTAL_OBJ_NODE);
+		return null;		
+	}
+	
 }
 
 
