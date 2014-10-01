@@ -23,26 +23,26 @@ public class RentalProvider extends LabelProvider implements
 
 	@Override
 	public Color getForeground(Object element) {
-	
+
 		if (element instanceof Customer)
-	
-		return Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
-	
+
+			return Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
+
 		else if (element instanceof RentalObject)
-	
-		return Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
-	
+
+			return Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
+
 		else if (element instanceof RentalAgency)
-	
-		return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-	
+
+			return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
+
 		else if (element instanceof Node)
-	
-		return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
-	
+
+			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
+
 		return null;
-	
-		}
+
+	}
 
 	@Override
 	public Color getBackground(Object element) {
@@ -82,9 +82,9 @@ public class RentalProvider extends LabelProvider implements
 		public Object[] getChildren() {
 			if (this.lbl_node.equals(CUSTOMER_NODE))
 				return agency.getCustomers().toArray();
-			else if (this.lbl_node.equals(RENTAL_OBJ_NODE))
-				return agency.getRentals().toArray();
 			else if (this.lbl_node.equals(LOCATIONS_NODE))
+				return agency.getRentals().toArray();
+			else if (this.lbl_node.equals(RENTAL_OBJ_NODE))
 				return agency.getObjectsToRent().toArray();
 			return null;
 		}

@@ -2,19 +2,29 @@ package com.sogeti.rental.ui.views;
 
 
 
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
 
 import com.opcoach.training.rental.Rental;
+import com.opcoach.training.rental.RentalAgency;
 import com.sogeti.rental.core.RentalCoreActivator;
+
 import org.eclipse.swt.widgets.Combo;
 
-public class RentalPropertyView extends ViewPart {
+public class RentalPropertyView extends ViewPart implements ISelectionListener {
 
 	private Label rentedObjLabel;
 	private Label lblCustomerName;
@@ -24,7 +34,18 @@ public class RentalPropertyView extends ViewPart {
 	public RentalPropertyView() {
 		// TODO Auto-generated constructor stub
 	}
-
+	@Override
+	public void init(IViewSite site) throws PartInitException {
+		// TODO Auto-generated method stub
+		super.init(site);
+		site.getPage().addSelectionListener(this);
+	}
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		getSite().getPage().removeSelectionListener(this);
+		super.dispose();
+	}
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
@@ -79,4 +100,16 @@ public class RentalPropertyView extends ViewPart {
 		lblFirstDate.setText( r.getStartDate().toString());
 		lblEndDate.setText(r.getEndDate().toString());
 	}
+	@Override
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
+		// TODO Auto-generated method stub
+		if(selection instanceof IStructuredSelection) {
+			Object selected = ((IStructuredSelection) selection).getFirstElement();
+			if(selected instanceof Rental)
+				this.setRental((Rental)selected);
+		}
+			
+	}
+
+
 }
