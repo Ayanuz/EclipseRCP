@@ -45,5 +45,45 @@
             name="Rental preferences">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="com.sogeti.ui.handlers.SampleHandler"
+            id="com.sogeti.rental.ui.RentalCommand"
+            name="Rental Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="com.sogeti.rental.ui.menus.RentalMenu"
+               label="Rental Menu">
+            <command
+                  commandId="com.sogeti.rental.ui.RentalCommand"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.views.ResourceNavigator?after=additions">
+         <menu
+               id="com.sogeti.rental.ui.menus.RentalMenu"
+               label="Touchmytralala">
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:com.sogeti.rental.ui.AgencyView?after=additions">
+         <command
+               commandId="com.sogeti.rental.ui.RentalCommand"
+               label="Rental Command"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
