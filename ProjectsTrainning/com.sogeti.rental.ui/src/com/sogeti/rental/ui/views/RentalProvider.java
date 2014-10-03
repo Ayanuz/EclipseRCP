@@ -12,11 +12,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.internal.theme.RangeDrawData;
 import org.eclipse.swt.widgets.Display;
 
 import com.opcoach.training.rental.Customer;
-import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
 import com.sogeti.rental.ui.Palette;
