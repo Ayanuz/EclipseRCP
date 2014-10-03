@@ -1,7 +1,5 @@
 package com.sogeti.rental.ui.views;
 
-
-
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -35,22 +33,25 @@ import org.eclipse.swt.widgets.Combo;
 
 public class CustomerView extends ViewPart implements ISelectionListener {
 	private Label lblCustomerName;
-	
+
 	public CustomerView() {
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		// TODO Auto-generated method stub
 		super.init(site);
 		site.getPage().addSelectionListener(this);
 	}
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		getSite().getPage().removeSelectionListener(this);
 		super.dispose();
 	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
@@ -61,34 +62,34 @@ public class CustomerView extends ViewPart implements ISelectionListener {
 		infoGroup.setLayoutData(gd_infoGroup);
 		infoGroup.setText("Customer spy");
 		infoGroup.setLayout(new GridLayout(1, false));
-		
+
 		lblCustomerName = new Label(infoGroup, SWT.NONE);
 		this.setCustomer(RentalCoreActivator.getAgency().getCustomers().get(0));
 	}
 
-	
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
 
 	}
+
 	private void setCustomer(Customer cust) {
 		lblCustomerName.setText(cust.getDisplayName());
 	}
+
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-		
-		if(selection.isEmpty())
+
+		if (selection.isEmpty())
 			return;
-		
-		if(selection instanceof IStructuredSelection) {
+
+		if (selection instanceof IStructuredSelection) {
 			Object selected = ((IStructuredSelection) selection).getFirstElement();
 			Customer cust = (Customer) Platform.getAdapterManager().getAdapter(selected, Customer.class);
 			if (cust != null)
 				setCustomer(cust);
 		}
-			
+
 	}
-	
-	
+
 }

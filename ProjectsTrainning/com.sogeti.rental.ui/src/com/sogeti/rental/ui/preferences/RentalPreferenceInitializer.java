@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import com.sogeti.rental.ui.RentalUICstes;
 import com.sogeti.rental.ui.RentalUiActivator;
 
-public class RentalPreferenceInitializer extends AbstractPreferenceInitializer implements RentalUICstes{
+public class RentalPreferenceInitializer extends AbstractPreferenceInitializer implements RentalUICstes {
 
 	public RentalPreferenceInitializer() {
 		// TODO Auto-generated constructor stub
@@ -23,11 +23,12 @@ public class RentalPreferenceInitializer extends AbstractPreferenceInitializer i
 	public void initializeDefaultPreferences() {
 		// TODO Auto-generated method stub
 		Color c = Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
-		
+
 		IPreferenceStore store = RentalUiActivator.getDefault().getPreferenceStore();
 		store.setDefault(P_CUSTOMER_COLOR, StringConverter.asString(c.getRGB()));
-		store.setDefault(P_OBJCTS_COLOR, StringConverter.asString(new RGB(255,0,0)));
-		store.setDefault(P_RENTAL_COLOR, StringConverter.asString(new RGB(0,255,0)));
+		store.setDefault(P_OBJCTS_COLOR, StringConverter.asString(new RGB(255, 0, 0)));
+		store.setDefault(P_RENTAL_COLOR, StringConverter.asString(new RGB(0, 255, 0)));
+		store.setDefault(P_PALETTE, "com.sogeti.rental.ui.defaultPalette");
 	}
 
 }

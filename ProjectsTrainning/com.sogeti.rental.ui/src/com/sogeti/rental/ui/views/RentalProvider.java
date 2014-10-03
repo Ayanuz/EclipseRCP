@@ -19,34 +19,19 @@ import com.opcoach.training.rental.Customer;
 import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
+import com.sogeti.rental.ui.Palette;
 import com.sogeti.rental.ui.RentalUICstes;
 import com.sogeti.rental.ui.RentalUiActivator;
 
-public class RentalProvider extends LabelProvider implements
-		ITreeContentProvider, RentalUICstes, IColorProvider  {
+public class RentalProvider extends LabelProvider implements ITreeContentProvider, RentalUICstes, IColorProvider {
 
 	@Override
 	public Color getForeground(Object element) {
 
-		if (element instanceof Customer) {
-			String str_color = RentalUiActivator.getDefault().getPreferenceStore().getString(P_CUSTOMER_COLOR);
-			return getAColor(str_color);
-		}
-		else if (element instanceof RentalObject) {
-			String str_color = RentalUiActivator.getDefault().getPreferenceStore().getString(P_OBJCTS_COLOR);
-			return getAColor(str_color);
-
-		}
-		else if (element instanceof Rental){
-			String str_color = RentalUiActivator.getDefault().getPreferenceStore().getString(P_RENTAL_COLOR);
-			return getAColor(str_color);
-		}
-
-		else if (element instanceof Node)
-
-			return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
-
-		return null;
+		String palette_id = RentalUiActivator.getDefault().getPreferenceStore().getString(P_PALETTE);
+		IColorProvider color_prov = ((Palette) RentalUiActivator.getDefault().getPalette_manager().get(palette_id))
+				.getColor_provider();
+		return color_prov.getForeground(element);
 
 	}
 
@@ -55,26 +40,24 @@ public class RentalProvider extends LabelProvider implements
 		// TODO Auto-generated method stub
 		return Display.getDefault().getSystemColor(SWT.COLOR_INFO_BACKGROUND);
 	}
-	
+
 	class Node {
 		private String lbl_node;
 		private RentalAgency agency;
-		
+
 		public Node(String lbl_node, RentalAgency agency) {
 			super();
 			this.lbl_node = lbl_node;
 			this.agency = agency;
 		}
-		
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + getOuterType().hashCode();
-			result = prime * result
-					+ ((agency == null) ? 0 : agency.hashCode());
-			result = prime * result
-					+ ((lbl_node == null) ? 0 : lbl_node.hashCode());
+			result = prime * result + ((agency == null) ? 0 : agency.hashCode());
+			result = prime * result + ((lbl_node == null) ? 0 : lbl_node.hashCode());
 			return result;
 		}
 
@@ -106,7 +89,7 @@ public class RentalProvider extends LabelProvider implements
 			// TODO Auto-generated method stub
 			return true;
 		}
-		
+
 		public String getLbl_node() {
 			return lbl_node;
 		}
@@ -114,13 +97,12 @@ public class RentalProvider extends LabelProvider implements
 		public void setLbl_node(String lbl_node) {
 			this.lbl_node = lbl_node;
 		}
-		
-		
+
 		@Override
 		public String toString() {
 			return this.lbl_node;
 		}
-		
+
 		public Object[] getChildren() {
 			if (this.lbl_node.equals(CUSTOMER_NODE))
 				return agency.getCustomers().toArray();
@@ -135,6 +117,7 @@ public class RentalProvider extends LabelProvider implements
 			return RentalProvider.this;
 		}
 	}
+
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		// TODO Auto-generated method stub
@@ -144,22 +127,20 @@ public class RentalProvider extends LabelProvider implements
 	@Override
 	public Object[] getElements(Object inputElement) {
 		// TODO Auto-generated method stub
-		if(inputElement instanceof Collection)
+		if (inputElement instanceof Collection)
 			return ((Collection) inputElement).toArray();
-		
+
 		return null;
 	}
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
 		// TODO Auto-generated method stub
-		if (parentElement instanceof RentalAgency)
-		{
+		if (parentElement instanceof RentalAgency) {
 			RentalAgency a = (RentalAgency) parentElement;
-			return new Node[] {new Node(CUSTOMER_NODE, a), new Node(RENTAL_OBJ_NODE, a), new Node(LOCATIONS_NODE, a)};
-		}
-		else if(parentElement instanceof Node)
-			return ((Node)parentElement).getChildren();
+			return new Node[] { new Node(CUSTOMER_NODE, a), new Node(RENTAL_OBJ_NODE, a), new Node(LOCATIONS_NODE, a) };
+		} else if (parentElement instanceof Node)
+			return ((Node) parentElement).getChildren();
 		return null;
 	}
 
@@ -172,53 +153,51 @@ public class RentalProvider extends LabelProvider implements
 	@Override
 	public boolean hasChildren(Object element) {
 		// TODO Auto-generated method stub
-		if ( (element instanceof RentalAgency) || (element instanceof Node))
+		if ((element instanceof RentalAgency) || (element instanceof Node))
 			return true;
-		
+
 		return false;
 	}
+
 	@Override
 	public String getText(Object element) {
 		// TODO Auto-generated method stub
 		if (element instanceof RentalAgency)
-			return ((RentalAgency)element).getName();
+			return ((RentalAgency) element).getName();
 		else if (element instanceof Customer)
-			return ((Customer)element).getDisplayName();
+			return ((Customer) element).getDisplayName();
 		else if (element instanceof RentalObject)
-			return ((RentalObject)element).getName();
-		
+			return ((RentalObject) element).getName();
+
 		return super.getText(element);
 	}
-	
+
 	@Override
 	public Image getImage(Object element) {
 		// TODO Auto-generated method stub
 		if (element instanceof RentalAgency)
 			return RentalUiActivator.getDefault().getImageRegistry().get(AGENCY_IMG);
-			
+
 		else if (element instanceof Node)
-			if (((Node)element).toString().equals(LOCATIONS_NODE))
+			if (((Node) element).toString().equals(LOCATIONS_NODE))
 				return RentalUiActivator.getDefault().getImageRegistry().get(LOCATIONS_NODE);
-			else if (((Node)element).toString().equals(CUSTOMER_NODE))
+			else if (((Node) element).toString().equals(CUSTOMER_NODE))
 				return RentalUiActivator.getDefault().getImageRegistry().get(CUSTOMER_NODE);
-			else if (((Node)element).toString().equals(RENTAL_OBJ_NODE))
+			else if (((Node) element).toString().equals(RENTAL_OBJ_NODE))
 				return RentalUiActivator.getDefault().getImageRegistry().get(RENTAL_OBJ_NODE);
-		return null;		
+		return null;
 	}
-	private Color getAColor(String rgb_str)
-	{
+
+	private Color getAColor(String rgb_str) {
 		ColorRegistry c_reg = JFaceResources.getColorRegistry();
-		
+
 		Color col = c_reg.get(rgb_str);
-		
-		if(col == null){
+
+		if (col == null) {
 			c_reg.put(rgb_str, StringConverter.asRGB(rgb_str));
 			col = c_reg.get(rgb_str);
 		}
 		return col;
 	}
-	
 
 }
-
-

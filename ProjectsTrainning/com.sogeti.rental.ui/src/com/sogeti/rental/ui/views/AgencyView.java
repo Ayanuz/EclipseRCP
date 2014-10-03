@@ -21,9 +21,11 @@ import com.sogeti.rental.ui.RentalUiActivator;
 public class AgencyView extends ViewPart implements IPropertyChangeListener {
 
 	private TreeViewer tv;
+
 	public AgencyView() {
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		// TODO Auto-generated method stub
@@ -31,7 +33,7 @@ public class AgencyView extends ViewPart implements IPropertyChangeListener {
 		RentalUiActivator.getDefault().getPreferenceStore().addPropertyChangeListener(this);
 
 	}
-	
+
 	@Override
 	public void createPartControl(Composite parent) {
 		tv = new TreeViewer(parent);
@@ -46,7 +48,7 @@ public class AgencyView extends ViewPart implements IPropertyChangeListener {
 		tv.getControl().setMenu(menu);
 		getSite().registerContextMenu(menu_manager, tv);
 		tv.expandAll();
-		
+
 	}
 
 	@Override
@@ -54,11 +56,12 @@ public class AgencyView extends ViewPart implements IPropertyChangeListener {
 		// TODO Auto-generated method stub
 
 	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		// TODO Auto-generated method stub
 		tv.refresh();
-		
+
 	}
 
 }

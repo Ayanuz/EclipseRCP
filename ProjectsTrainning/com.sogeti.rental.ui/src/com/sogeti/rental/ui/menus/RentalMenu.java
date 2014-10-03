@@ -11,8 +11,7 @@ public class RentalMenu extends ExtensionContributionFactory {
 	}
 
 	@Override
-	public void createContributionItems(IServiceLocator serviceLocator,
-			IContributionRoot additions) {
+	public void createContributionItems(IServiceLocator serviceLocator, IContributionRoot additions) {
 		// TODO Auto-generated method stub
 
 	}

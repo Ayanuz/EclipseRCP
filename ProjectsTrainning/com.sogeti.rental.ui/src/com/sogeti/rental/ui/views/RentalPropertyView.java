@@ -1,7 +1,5 @@
 package com.sogeti.rental.ui.views;
 
-
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -37,22 +35,25 @@ public class RentalPropertyView extends ViewPart implements ISelectionListener {
 	private Label lblCustomerName;
 	private Label lblFirstDate;
 	private Label lblEndDate;
-	
+
 	public RentalPropertyView() {
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		// TODO Auto-generated method stub
 		super.init(site);
 		site.getPage().addSelectionListener(this);
 	}
+
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		getSite().getPage().removeSelectionListener(this);
 		super.dispose();
 	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		// TODO Auto-generated method stub
@@ -63,7 +64,7 @@ public class RentalPropertyView extends ViewPart implements ISelectionListener {
 		infoGroup.setLayoutData(gd_infoGroup);
 		infoGroup.setText("Rental properties");
 		infoGroup.setLayout(new GridLayout(2, false));
-		
+
 		rentedObjLabel = new Label(infoGroup, SWT.NONE);
 		GridData gd = new GridData();
 		gd.grabExcessHorizontalSpace = true;
@@ -73,63 +74,64 @@ public class RentalPropertyView extends ViewPart implements ISelectionListener {
 		this.setLblAsDragSrc(this.rentedObjLabel);
 		Label lblStatCustomer = new Label(infoGroup, SWT.NONE);
 		lblStatCustomer.setText("Lou\u00E9 \u00E0");
-		
+
 		lblCustomerName = new Label(infoGroup, SWT.NONE);
-		
+
 		Group grpDates = new Group(parent, SWT.NONE);
 		grpDates.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		grpDates.setText("Dates pr\u00E9vues");
 		grpDates.setLayout(new GridLayout(2, false));
-		
+
 		Label lblStatFirstDate = new Label(grpDates, SWT.NONE);
 		lblStatFirstDate.setText("Date d\u00E9but");
-		
+
 		lblFirstDate = new Label(grpDates, SWT.NONE);
 		lblFirstDate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		Label lblStatEndDate = new Label(grpDates, SWT.NONE);
 		lblStatEndDate.setText("Date fin");
-		
+
 		lblEndDate = new Label(grpDates, SWT.NONE);
 		lblEndDate.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		this.setRental(RentalCoreActivator.getAgency().getRentals().get(0));
 	}
 
-	
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
 
 	}
+
 	private void setRental(Rental r) {
 		rentedObjLabel.setText(r.getRentedObject().getName());
-		lblCustomerName.setText( r.getCustomer().getDisplayName());
-		lblFirstDate.setText( r.getStartDate().toString());
+		lblCustomerName.setText(r.getCustomer().getDisplayName());
+		lblFirstDate.setText(r.getStartDate().toString());
 		lblEndDate.setText(r.getEndDate().toString());
 	}
+
 	@Override
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		// TODO Auto-generated method stub
-		if(selection instanceof IStructuredSelection) {
+		if (selection instanceof IStructuredSelection) {
 			Object selected = ((IStructuredSelection) selection).getFirstElement();
-			if(selected instanceof Rental)
-				this.setRental((Rental)selected);
+			if (selected instanceof Rental)
+				this.setRental((Rental) selected);
 		}
-			
+
 	}
-	
+
 	public void setLblAsDragSrc(final Label lbl) {
-		DragSource dg_src = new DragSource(lbl,  DND.DROP_MOVE | DND.DROP_COPY);
-		dg_src.setTransfer(new Transfer[] { TextTransfer.getInstance()});
-		dg_src.addDragListener(new DragSourceAdapter(){
+		DragSource dg_src = new DragSource(lbl, DND.DROP_MOVE | DND.DROP_COPY);
+		dg_src.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		dg_src.addDragListener(new DragSourceAdapter() {
 			@Override
 			public void dragSetData(DragSourceEvent event) {
 				// TODO Auto-generated method stub
-				if(TextTransfer.getInstance().isSupportedType(event.dataType))
+				if (TextTransfer.getInstance().isSupportedType(event.dataType))
 					event.data = lbl.getText();
 			}
 		});
-			
+
 	}
 
 }
