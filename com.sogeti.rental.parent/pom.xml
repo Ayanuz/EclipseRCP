@@ -50,7 +50,7 @@
 
 	<!-- the modules that should be built together -->
 	<modules>
-		<module>../com.sogeti.rental.core</module>
+		<module>../ProjectsTrainning/com.sogeti.rental.core</module>
 	</modules>
 
 </project>
